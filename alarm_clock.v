@@ -13,7 +13,7 @@ module aclock (
  input AL_ON,  /* If high, the alarm is ON (and Alarm will go high if the alarm time equals the real time). If low the the alarm function is OFF. */
  output reg Alarm,  /* This will go high if the alarm time equals the current time, and AL_ON is high. This will remain high, until STOP_al goes high, which will bring Alarm back low.*/
  output [1:0]  H_out1, 
-/* The most significant digit of the hour. Valid values are 0 to 2. */
+/* The most significant dig:it of the hour. Valid values are 0 to 2. */
  output [3:0]  H_out0, 
 /* The least significant digit of the hour. Valid values are 0 to 9. */
  output [3:0]  M_out1, 
@@ -130,10 +130,10 @@ module aclock (
  c_hour1 = 0;
  end
  c_hour0 = tmp_hour - c_hour1*10; 
- c_min1 = mod_10(tmp_minute); 
+ c_min1 = mod_10(tmp_minute);
  c_min0 = tmp_minute - c_min1*10;
  c_sec1 = mod_10(tmp_second);
- c_sec0 = tmp_second - c_sec1*10; 
+ c_sec0 = tmp_second - c_sec1*10;
  end
  assign H_out1 = c_hour1; // the most significant hour digit of the clock
  assign H_out0 = c_hour0; // the least significant hour digit of the clock
@@ -144,12 +144,14 @@ module aclock (
 
  /******** Alarm function******************/
  always @(posedge clk_1s or posedge reset) begin
- if(reset) 
- Alarm <=0; 
+ if(reset)
+ Alarm <=0;
  else begin
  if({a_hour1,a_hour0,a_min1,a_min0,a_sec1,a_sec0}=={c_hour1,c_hour0,c_min1,c_min0,c_sec1,c_sec0})
  begin // if alarm time equals clock time, it will pulse high the Alarm signal with AL_ON=1
- if(AL_ON) Alarm <= 1; 
+ if(AL_ON) 
+     Alarm <= 1; 
+    $display("alarm is HIGH at %0t", $time);
  end
  if(STOP_al) Alarm <= 0; // when STOP_al = 1, push low the Alarm signal
  end
