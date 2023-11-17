@@ -135,7 +135,6 @@ module aclock (
  c_sec1 = mod_10(tmp_second);
  c_sec0 = tmp_second - c_sec1*10; 
  end
- // fpga4student.com FPGA projects, VHDL projects, Verilog project
  assign H_out1 = c_hour1; // the most significant hour digit of the clock
  assign H_out0 = c_hour0; // the least significant hour digit of the clock
  assign M_out1 = c_min1; // the most significant minute digit of the clock
